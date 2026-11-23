@@ -22,4 +22,21 @@ class Usuario {
     required this.email,
     required this.criadoEm,
   });
+
+  /// Converte para Map, para poder virar JSON e ser salvo no
+  /// SharedPreferences (que só guarda texto, número, bool e lista de texto).
+  Map<String, dynamic> toMap() => {
+    'uid': uid,
+    'nome': nome,
+    'email': email,
+    'criadoEm': criadoEm.toIso8601String(),
+  };
+
+  /// Faz o caminho contrário: monta o Usuario a partir do Map salvo.
+  factory Usuario.fromMap(Map<String, dynamic> map) => Usuario(
+    uid: map['uid'] as String,
+    nome: map['nome'] as String,
+    email: map['email'] as String,
+    criadoEm: DateTime.parse(map['criadoEm'] as String),
+  );
 }
