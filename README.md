@@ -82,6 +82,7 @@ Tag: `etapa-1`
   - Um teste automático achou um erro: `Navigator.pushNamed<String>` não funciona com as rotas do `routes:` do `MaterialApp`, porque elas são do tipo `dynamic`. A correção foi usar `pushNamed` sem tipo e conferir o resultado com `is String`.
   - O primeiro commit falhou porque o caminho de um arquivo passava do limite de tamanho do Windows. Foi resolvido com `git config core.longpaths true`.
   - Pedi as explicações em português e escolhi publicar o repositório como público.
+- **O que eu aprendi:** que dá pra validar os campos direto no `TextFormField` com o `validator`, e que deixar o login separado num `AuthService` facilita trocar pro Firebase depois. Também vi que o `pushNamed<String>` dá erro com rota nomeada.
 
 ---
 
@@ -123,3 +124,4 @@ Tag: `etapa-2`
 - **O que mudou durante o desenvolvimento:**
   - Nas telas, só a navegação do login mudou (antes mostrava uma mensagem; agora abre a tela principal). O resto da mudança ficou dentro do `AuthService`. Isso mostrou a vantagem de ter separado o serviço das telas na Etapa 1.
   - Para tirar os prints com os dados salvos, os dados foram gravados direto no `localStorage` do navegador. Isso mostrou que, na versão web, o `shared_preferences` salva no `localStorage`.
+- **O que eu aprendi:** que o SharedPreferences só guarda chave e valor, então o usuário tem que virar JSON pra salvar. Que não é bom salvar a senha direto, por isso salva o hash. E que o drawer é só colocar no `Scaffold` que o ícone de menu aparece sozinho.
