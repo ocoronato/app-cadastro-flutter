@@ -2,7 +2,7 @@
 
 Aplicativo com cadastro e login de usuários, construído por etapas.
 
-**Dupla:** NOME DO ALUNO 1 · NOME DO ALUNO 2
+**Aluno:** Felipe Coronato — RA 60300641
 
 ## Como rodar
 
