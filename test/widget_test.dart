@@ -34,6 +34,11 @@ void main() {
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
 
+    // Tenta entrar vazio primeiro: aparecem os erros.
+    await tester.tap(find.widgetWithText(FilledButton, 'Entrar'));
+    await tester.pump();
+    expect(find.text('Informe seu e-mail.'), findsOneWidget);
+
     // Abre a tela de cadastro.
     await tester.tap(find.text('Não tem conta? Cadastre-se'));
     await tester.pumpAndSettle();
@@ -50,6 +55,9 @@ void main() {
     // Voltou para o login com o e-mail preenchido.
     expect(find.text('Conta criada! Agora faça o login.'), findsOneWidget);
     expect(find.text('maria@email.com'), findsOneWidget);
+    // Os erros da tentativa anterior não podem continuar na tela.
+    expect(find.text('Informe seu e-mail.'), findsNothing);
+    expect(find.text('Informe sua senha.'), findsNothing);
 
     await tester.enterText(find.byType(TextFormField).at(1), 'segredo1');
     await tester.tap(find.widgetWithText(FilledButton, 'Entrar'));

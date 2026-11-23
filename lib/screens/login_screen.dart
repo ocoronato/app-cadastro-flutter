@@ -55,6 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
     // usar pushNamed<String>; testamos o tipo do resultado com `is String`.
     final emailCriado = await Navigator.pushNamed(context, CadastroScreen.rota);
     if (emailCriado is String && mounted) {
+      // Limpa os erros de uma tentativa anterior (ex.: "Informe seu e-mail.").
+      _formKey.currentState?.reset();
       _emailController.text = emailCriado;
       _senhaController.clear();
       _mostrarMensagem('Conta criada! Agora faça o login.');
