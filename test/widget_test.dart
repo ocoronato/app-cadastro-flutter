@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app_cadastro/main.dart';
+import 'package:app_cadastro/services/auth_service.dart';
 import 'package:app_cadastro/utils/validadores.dart';
 
 void main() {
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    await AuthService.instance.carregarSessao();
+  });
+
   group('Validadores', () {
     test('e-mail', () {
       expect(Validadores.email(''), isNotNull);
@@ -23,9 +30,7 @@ void main() {
     });
   });
 
-  testWidgets('cadastro volta para o login e o login funciona', (
-    tester,
-  ) async {
+  testWidgets('cadastro, login, drawer e sair', (tester) async {
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
 
@@ -49,7 +54,20 @@ void main() {
     await tester.enterText(find.byType(TextFormField).at(1), 'segredo1');
     await tester.tap(find.widgetWithText(FilledButton, 'Entrar'));
     await tester.pumpAndSettle();
-    expect(find.text('Bem-vindo(a), Maria Souza!'), findsOneWidget);
+
+    // Entrou na tela principal (em branco) e o drawer mostra o usuário.
+    expect(find.widgetWithText(AppBar, 'Início'), findsOneWidget);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    expect(find.text('Maria Souza'), findsOneWidget);
+
+    // Sai da conta.
+    await tester.tap(find.widgetWithText(ListTile, 'Sair'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Sair'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(FilledButton, 'Entrar'), findsOneWidget);
+    expect(AuthService.instance.currentUser, isNull);
   });
 
   testWidgets('login com campos vazios mostra erros', (tester) async {
