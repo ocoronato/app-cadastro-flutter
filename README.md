@@ -26,9 +26,11 @@ lib/
 ├── services/
 │   ├── auth_service.dart     # cadastro, login e logout (mesmos nomes do FirebaseAuth)
 │   └── auth_exception.dart   # erros com os códigos do Firebase
-├── screens/                  # telas
+├── screens/                  # login, cadastro, home (em branco) e perfil
 ├── utils/validadores.dart    # validação dos campos
-└── widgets/campo_senha.dart  # campo de senha com mostrar/esconder
+└── widgets/
+    ├── campo_senha.dart      # campo de senha com mostrar/esconder
+    └── menu_lateral.dart     # drawer da tela principal
 wiki/                         # páginas da Wiki (histórias de usuário)
 ```
 
@@ -74,3 +76,37 @@ Tag: `etapa-1`
 > - Para quê? (ex.: gerar a estrutura inicial das telas, entender o `Form` e os validators)
 > - O que ela sugeriu? (ex.: imitar os nomes de métodos do `FirebaseAuth`; um widget `CampoSenha` reaproveitável)
 > - O que nós alteramos ou aprendemos? (ex.: o erro do `pushNamed<String>` com rotas nomeadas e como corrigimos)
+
+---
+
+## Etapa 2 — SharedPreferences e drawer
+
+Tag: `etapa-2`
+
+**O que foi feito**
+- Pacote [`shared_preferences`](https://pub.dev/packages/shared_preferences) para salvar o usuário no aparelho.
+  - O `Usuario` virou JSON (`toMap` / `fromMap`) e é salvo na chave `usuario`.
+  - Só existe **um cadastro por vez**: salvar na mesma chave substitui o cadastro anterior.
+  - A senha **não** é salva em texto puro: salvamos o hash SHA-256 (pacote `crypto`) e, no login, comparamos os hashes.
+  - A chave `logado` guarda se a sessão está aberta. Ao abrir o app, o `main()` chama `AuthService.instance.carregarSessao()` e decide se abre no login ou na tela principal.
+- Só a parte de dentro do `AuthService` mudou; as telas continuaram chamando os mesmos métodos no estilo Firebase.
+- **Drawer** (`widgets/menu_lateral.dart`) com nome e e-mail do usuário no topo e as opções Início, Meu perfil, Sobre e Sair (com confirmação).
+- **Tela principal em branco** (`screens/home_screen.dart`).
+- Tela **Meu perfil** mostrando os dados salvos.
+- Novas histórias de usuário na Wiki (HU05 a HU08).
+- Testes do `AuthService` com `SharedPreferences.setMockInitialValues` (`test/auth_service_test.dart`).
+
+**Prints**
+
+| Tela principal | Drawer | Meu perfil |
+|---|---|---|
+| ![Home](docs/prints/etapa-2/home.png) | ![Drawer](docs/prints/etapa-2/drawer.png) | ![Perfil](docs/prints/etapa-2/perfil.png) |
+
+**Vídeo:** LINK DO YOUTUBE (não listado)
+
+**Declaração de uso de IA**
+
+> PREENCHER COM AS PALAVRAS DA DUPLA. Exemplo do que responder:
+> - Usamos IA? Qual? Para quê? (ex.: entender como o SharedPreferences salva dados e como montar o Drawer)
+> - O que ela sugeriu? (ex.: salvar o hash da senha em vez da senha; `pushNamedAndRemoveUntil` no logout)
+> - O que nós alteramos ou aprendemos?

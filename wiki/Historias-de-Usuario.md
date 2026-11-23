@@ -56,3 +56,40 @@ Referência: autenticação por e-mail e senha do **Firebase Auth**.
 **Critérios de aceitação**
 - [ ] A tela de login tem o link "Não tem conta? Cadastre-se".
 - [ ] A tela de cadastro tem o botão de voltar para o login.
+
+## HU05 — Guardar meus dados no aparelho *(Etapa 2)*
+
+**Como** usuário, **quero** que meu cadastro continue salvo quando eu fechar o app, **para** não precisar me cadastrar de novo.
+
+**Critérios de aceitação**
+- [ ] Os dados do cadastro são salvos com `shared_preferences`.
+- [ ] Só existe um cadastro por vez: um novo cadastro substitui o anterior.
+- [ ] A senha não é salva em texto puro (é salvo o hash SHA-256).
+
+## HU06 — Continuar logado *(Etapa 2)*
+
+**Como** usuário, **quero** continuar logado ao abrir o app de novo, **para** não digitar a senha toda vez.
+
+**Critérios de aceitação**
+- [ ] Se eu não saí da conta, o app abre direto na tela principal.
+- [ ] Se eu saí da conta, o app abre na tela de login.
+
+## HU07 — Navegar pelo menu lateral *(Etapa 2)*
+
+**Como** usuário logado, **quero** um menu lateral (drawer), **para** acessar as partes do app.
+
+**Critérios de aceitação**
+- [ ] A tela principal tem um ícone de menu que abre o drawer.
+- [ ] O topo do drawer mostra meu nome e e-mail.
+- [ ] O drawer tem as opções Início, Meu perfil, Sobre e Sair.
+- [ ] A tela principal (Início) fica em branco por enquanto.
+- [ ] "Meu perfil" mostra os dados salvos (nome, e-mail e data de cadastro).
+
+## HU08 — Sair da conta *(Etapa 2)*
+
+**Como** usuário logado, **quero** sair da minha conta, **para** que outra pessoa não use o app no meu nome.
+
+**Critérios de aceitação**
+- [ ] A opção "Sair" do drawer pede confirmação.
+- [ ] Ao confirmar, o app volta para a tela de login e não é possível voltar para a tela principal pelo botão "voltar".
+- [ ] O cadastro continua salvo; só a sessão é encerrada.
