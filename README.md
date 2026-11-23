@@ -71,11 +71,17 @@ Tag: `etapa-1`
 
 **Declaração de uso de IA**
 
-> PREENCHER COM AS PALAVRAS DA DUPLA. Exemplo do que responder:
-> - Usamos IA? Qual? (ex.: Claude)
-> - Para quê? (ex.: gerar a estrutura inicial das telas, entender o `Form` e os validators)
-> - O que ela sugeriu? (ex.: imitar os nomes de métodos do `FirebaseAuth`; um widget `CampoSenha` reaproveitável)
-> - O que nós alteramos ou aprendemos? (ex.: o erro do `pushNamed<String>` com rotas nomeadas e como corrigimos)
+- **Usei IA?** Sim. Usei o **Claude** (Claude Code, da Anthropic).
+- **Para quê?** Passei o enunciado das etapas e a IA gerou o projeto da Etapa 1: o código das telas, o `AuthService`, os validadores, os testes, as histórias de usuário da wiki, este README, os prints das telas e os commits e a tag no Git.
+- **O que ela sugeriu?**
+  - Imitar o Firebase Auth: os mesmos nomes de método (`createUserWithEmailAndPassword`, `signInWithEmailAndPassword`, `signOut`, `currentUser`) e os mesmos códigos de erro (`email-already-in-use`, `wrong-password`...). Assim, quando o Firebase for ligado de verdade, só o `AuthService` muda.
+  - Senha com no mínimo 6 caracteres, que é a regra do Firebase.
+  - Um widget `CampoSenha` reaproveitável, com o botão de mostrar/esconder a senha.
+  - Depois do cadastro, voltar para o login com o e-mail já preenchido.
+- **O que mudou durante o desenvolvimento:**
+  - Um teste automático achou um erro: `Navigator.pushNamed<String>` não funciona com as rotas do `routes:` do `MaterialApp`, porque elas são do tipo `dynamic`. A correção foi usar `pushNamed` sem tipo e conferir o resultado com `is String`.
+  - O primeiro commit falhou porque o caminho de um arquivo passava do limite de tamanho do Windows. Foi resolvido com `git config core.longpaths true`.
+  - Pedi as explicações em português e escolhi publicar o repositório como público.
 
 ---
 
@@ -106,7 +112,14 @@ Tag: `etapa-2`
 
 **Declaração de uso de IA**
 
-> PREENCHER COM AS PALAVRAS DA DUPLA. Exemplo do que responder:
-> - Usamos IA? Qual? Para quê? (ex.: entender como o SharedPreferences salva dados e como montar o Drawer)
-> - O que ela sugeriu? (ex.: salvar o hash da senha em vez da senha; `pushNamedAndRemoveUntil` no logout)
-> - O que nós alteramos ou aprendemos?
+- **Usei IA?** Sim. Usei o **Claude** (Claude Code, da Anthropic).
+- **Para quê?** A IA gerou o código da Etapa 2 a partir do enunciado: o salvamento com `shared_preferences`, o drawer, a tela principal, a tela de perfil, os testes, a documentação, os prints e os commits. Também criou o repositório no GitHub e enviou o projeto.
+- **O que ela sugeriu?**
+  - Salvar o usuário como JSON numa única chave (`usuario`). Salvar de novo na mesma chave sobrescreve o valor antigo, e é isso que faz o novo cadastro substituir o anterior, como o enunciado pede.
+  - **Não salvar a senha em texto puro:** guardar o hash SHA-256 (pacote `crypto`) e, no login, comparar os hashes.
+  - Guardar se o usuário está logado (chave `logado`), para o app abrir direto na tela principal enquanto ele não sair da conta.
+  - Uma tela "Meu perfil" para mostrar que os dados ficaram salvos, já que a tela principal precisa ficar em branco.
+  - Usar `pushReplacementNamed` no login e `pushNamedAndRemoveUntil` no logout, para o botão "voltar" não levar para uma tela errada.
+- **O que mudou durante o desenvolvimento:**
+  - Nas telas, só a navegação do login mudou (antes mostrava uma mensagem; agora abre a tela principal). O resto da mudança ficou dentro do `AuthService`. Isso mostrou a vantagem de ter separado o serviço das telas na Etapa 1.
+  - Para tirar os prints com os dados salvos, os dados foram gravados direto no `localStorage` do navegador. Isso mostrou que, na versão web, o `shared_preferences` salva no `localStorage`.
