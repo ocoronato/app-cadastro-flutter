@@ -109,7 +109,7 @@ Tag: `etapa-2`
 |---|---|---|
 | ![Home](docs/prints/etapa-2/home.png) | ![Drawer](docs/prints/etapa-2/drawer.png) | ![Perfil](docs/prints/etapa-2/perfil.png) |
 
-**Vídeo:** LINK DO YOUTUBE (não listado)
+**Vídeo:** https://youtu.be/T811EN3ozys
 
 **Declaração de uso de IA**
 
