@@ -5,6 +5,7 @@ import '../services/auth_service.dart';
 import '../utils/validadores.dart';
 import '../widgets/campo_senha.dart';
 import 'cadastro_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const rota = '/login';
@@ -34,12 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() => _carregando = true);
     try {
-      final usuario = await AuthService.instance.signInWithEmailAndPassword(
+      await AuthService.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _senhaController.text,
       );
       if (!mounted) return;
-      _mostrarMensagem('Bem-vindo(a), ${usuario.nome}!');
+      // Troca o login pela home: o botão "voltar" não volta para o login.
+      Navigator.pushReplacementNamed(context, HomeScreen.rota);
     } on AuthException catch (e) {
       _mostrarMensagem(e.mensagem, erro: true);
     } finally {
@@ -51,10 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // A tela de cadastro devolve o e-mail criado, para já preencher aqui.
     // Obs.: as rotas do `routes:` são do tipo dynamic, por isso não dá para
     // usar pushNamed<String>; testamos o tipo do resultado com `is String`.
-    final emailCriado = await Navigator.pushNamed(
-      context,
-      CadastroScreen.rota,
-    );
+    final emailCriado = await Navigator.pushNamed(context, CadastroScreen.rota);
     if (emailCriado is String && mounted) {
       _emailController.text = emailCriado;
       _senhaController.clear();
